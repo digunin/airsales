@@ -64,3 +64,9 @@ export type Flight = {
     legs: FlightLeg[];
   };
 };
+
+export type AirsalesResponse = {
+  result: {
+    flights: Flight[];
+  };
+};
