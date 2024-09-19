@@ -35,10 +35,10 @@ type FlightSegment = {
   };
   arrivalDate: string;
   departureDate: string;
-  starting: true;
+  starting: boolean;
 };
 
-type FlightLeg = {
+export type FlightLeg = {
   duration: number;
   segments: FlightSegment[];
 };
@@ -49,17 +49,10 @@ export type Flight = {
       caption: string;
     };
     price: {
-      passengerPrices: [
-        {
-          passengerType: {
-            uid: PassangerTypeUID;
-          };
-          singlePassengerTotal: {
-            amount: string;
-            currencyCode: CurrencyCode;
-          };
-        },
-      ];
+      total: {
+        amount: string;
+        currencyCode: CurrencyCode;
+      };
     };
     legs: FlightLeg[];
   };
