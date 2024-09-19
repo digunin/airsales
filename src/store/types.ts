@@ -1,4 +1,11 @@
-export type FlightsSorting = 'price-asc' | 'price-desc' | 'duration';
+export type SortMode =
+  | 'price'
+  | 'duration-from-home'
+  | 'duration-return-to-home'
+  | 'duration-total'
+  | 'duration-from-departure-to-returning';
+
+export type SortOrder = 'asc' | 'desc';
 
 export type FiltersState = {
   transfers: number | null;
@@ -10,7 +17,8 @@ export type FiltersState = {
 };
 
 export type SortingState = {
-  mode: FlightsSorting;
+  mode: SortMode;
+  order: SortOrder;
 };
 
 type PassangerTypeUID = 'ADULT';

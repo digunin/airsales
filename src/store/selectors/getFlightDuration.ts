@@ -10,7 +10,7 @@ export const returnToHomeFlightDuration = (flight: Flight) => {
   return leg2.duration;
 };
 
-export const sumFlightsDuration = (flight: Flight) => {
+export const totalFlightsDuration = (flight: Flight) => {
   const [leg1, leg2] = getFlightLegs(flight);
   return leg1.duration + leg2.duration;
 };

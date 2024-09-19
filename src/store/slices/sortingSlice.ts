@@ -1,20 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { FlightsSorting, SortingState } from '../types';
+import { SortMode, SortingState, SortOrder } from '../types';
 
 const initialState: SortingState = {
-  mode: 'price-asc',
+  mode: 'price',
+  order: 'asc',
 };
 
 const sortingSlice = createSlice({
   name: 'sorting',
   initialState,
   reducers: {
-    setSortingMode: (state, action: PayloadAction<FlightsSorting>) => {
+    setSortMode: (state, action: PayloadAction<SortMode>) => {
       state.mode = action.payload;
+    },
+    setSortOrder: (state, action: PayloadAction<SortOrder>) => {
+      state.order = action.payload;
     },
   },
 });
 
-export const { setSortingMode } = sortingSlice.actions;
+export const { setSortMode, setSortOrder } = sortingSlice.actions;
 
 export default sortingSlice.reducer;
