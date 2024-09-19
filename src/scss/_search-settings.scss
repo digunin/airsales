@@ -1,0 +1,22 @@
+aside {
+  width: 200px;
+  padding: 5px;
+  padding-top: 3em;
+  font-size: small;
+  header {
+    font-weight: bold;
+    margin: 1em 0;
+  }
+  label {
+    vertical-align: middle;
+    margin: 1px;
+    input[type='radio'] {
+      vertical-align: middle;
+    }
+  }
+  .radio-block {
+    margin-bottom: 1em;
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -1,2 +1,8 @@
-@import "simple-reset";
-@import "container";
+@import 'simple-reset';
+@import 'variables';
+@import 'container';
+@import 'search-settings';
+
+body {
+  font-family: 'roboto';
+}
