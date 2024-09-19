@@ -1,7 +1,7 @@
 export type FlightsSorting = 'price-asc' | 'price-desc' | 'duration';
 
 export type FiltersState = {
-  transfers: number;
+  transfers: number | null;
   price: {
     from: number | null;
     to: number | null;
