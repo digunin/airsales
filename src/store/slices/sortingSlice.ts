@@ -1,12 +1,12 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { FlightsSorting, SortingState } from "../types";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { FlightsSorting, SortingState } from '../types';
 
 const initialState: SortingState = {
-  mode: "price-asc",
+  mode: 'price-asc',
 };
 
 const sortingSlice = createSlice({
-  name: "sorting",
+  name: 'sorting',
   initialState,
   reducers: {
     setSortingMode: (state, action: PayloadAction<FlightsSorting>) => {

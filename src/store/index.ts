@@ -1,12 +1,11 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import rootReducer from "./rootReducer";
-import { flightsAPI } from "../api/flightsAPI";
+import { configureStore } from '@reduxjs/toolkit';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import rootReducer from './rootReducer';
+import { flightsAPI } from '../api/flightsAPI';
 
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(flightsAPI.middleware),
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(flightsAPI.middleware),
 });
 
 export type AppDispatch = typeof store.dispatch;

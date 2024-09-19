@@ -1,4 +1,4 @@
-export type FlightsSorting = "price-asc" | "price-desc" | "duration";
+export type FlightsSorting = 'price-asc' | 'price-desc' | 'duration';
 
 export type FiltersState = {
   transfers: number;
@@ -13,8 +13,8 @@ export type SortingState = {
   mode: FlightsSorting;
 };
 
-type PassangerTypeUID = "ADULT";
-type CurrencyCode = "RUB";
+type PassangerTypeUID = 'ADULT';
+type CurrencyCode = 'RUB';
 
 type FlightSegment = {
   departureAirport: {
@@ -58,7 +58,7 @@ export type Flight = {
             amount: string;
             currencyCode: CurrencyCode;
           };
-        }
+        },
       ];
     };
     legs: FlightLeg[];
