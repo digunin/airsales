@@ -8,7 +8,10 @@ export type SortMode =
 export type SortOrder = 'asc' | 'desc';
 
 export type FiltersState = {
-  transfers: number | null;
+  transfers: {
+    nonstop: boolean;
+    oneStop: boolean;
+  };
   price: {
     from: number | null;
     to: number | null;
@@ -21,7 +24,6 @@ export type SortingState = {
   order: SortOrder;
 };
 
-type PassangerTypeUID = 'ADULT';
 type CurrencyCode = 'RUB';
 
 export type FlightSegment = {
