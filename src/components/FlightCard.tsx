@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Flight } from '../store/types';
-import { fromDeaprtureTimeToReturningTime, getFlightSummary } from '../store/selectors/getFlightDuration';
+import { fromDeaprtureTimeToReturningTime, getFlightSummary } from '../store/selectors/utils';
 
 type FlightCardProps = { flight: Flight };
 export const FlightCard: FC<FlightCardProps> = ({ flight }) => {
@@ -9,12 +9,12 @@ export const FlightCard: FC<FlightCardProps> = ({ flight }) => {
     <article className="flight-card">
       <div style={{ margin: '1em' }}>
         <p>Вылет</p>
-        <p>{fromHome.departureDate}</p>
-        <p>{fromHome.arrivalDate}</p>
+        <p>{fromHome.departureSegment.departureDate}</p>
+        <p>{fromHome.arrivalSegment.arrivalDate}</p>
         <p>{fromHome.duration}</p>
         <p>Возвращение</p>
-        <p>{returnHome.departureDate}</p>
-        <p>{returnHome.arrivalDate}</p>
+        <p>{returnHome.departureSegment.departureDate}</p>
+        <p>{returnHome.arrivalSegment.arrivalDate}</p>
         <p>{returnHome.duration}</p>
         <p>Суммарный полет</p>
         <p>{fromHome.duration + returnHome.duration}</p>

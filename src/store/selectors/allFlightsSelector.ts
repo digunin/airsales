@@ -7,7 +7,7 @@ import {
   returnToHomeFlightDuration,
   totalFlightsDuration,
   fromDeaprtureTimeToReturningTime,
-} from './getFlightDuration';
+} from './utils';
 
 export const selectAllFlights = createSelector(flightsAPI.endpoints.loadData.select(), loadedData => {
   const emptyData: Flight[] = [];

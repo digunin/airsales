@@ -24,7 +24,7 @@ export type SortingState = {
 type PassangerTypeUID = 'ADULT';
 type CurrencyCode = 'RUB';
 
-type FlightSegment = {
+export type FlightSegment = {
   departureAirport: {
     uid: string;
     caption: string;
@@ -44,6 +44,11 @@ type FlightSegment = {
   arrivalDate: string;
   departureDate: string;
   starting: boolean;
+  airline: {
+    uid: string;
+    caption: string;
+    airlineCode: string;
+  };
 };
 
 export type FlightLeg = {
@@ -70,4 +75,11 @@ export type AirsalesResponse = {
   result: {
     flights: Flight[];
   };
+};
+
+export type FlightLegSummary = {
+  departureSegment: FlightSegment;
+  arrivalSegment: FlightSegment;
+  duration: number;
+  transfers: number;
 };
