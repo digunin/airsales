@@ -3,7 +3,10 @@ section.flights-list {
   margin-left: calc($search-settings-width + 20px);
   margin-top: 1em;
   .flight-card {
-    margin-bottom: 2em;
+    margin-top: 2em;
+    &:first-of-type {
+      margin-top: 0;
+    }
     header {
       background-color: $main-color;
       color: white;
@@ -79,5 +82,11 @@ section.flights-list {
       border: none;
       padding: 1em;
     }
+  }
+  .show-more {
+    display: block;
+    margin: 1em auto;
+    padding: 3px 4em;
+    font-size: medium;
   }
 }
