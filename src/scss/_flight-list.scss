@@ -1,6 +1,6 @@
 section.flights-list {
   width: 100%;
-  margin-left: $search-settings-width;
+  margin-left: calc($search-settings-width + 20px);
   margin-top: 1em;
   .flight-card {
     margin-bottom: 2em;

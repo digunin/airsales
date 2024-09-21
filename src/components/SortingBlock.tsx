@@ -16,24 +16,32 @@ export const SortingBlock = () => {
   const order = useAppSelector(state => state.sortingState.order);
 
   return (
-    <>
+    <div className="sorting-block">
       <header>Сортировать</header>
       <section>
         <div className="radio-block">
           <label>
-            <input checked={order === 'asc'} type="radio" name="sorting-order" onChange={sortOrderHandler('asc')} /> -
-            по возрастанию
+            <input checked={order === 'asc'} type="radio" name="sorting-order" onChange={sortOrderHandler('asc')} />
+            <span className="radio-option" title="по возрастанию">
+              - по возрастанию
+            </span>
           </label>
           <label>
-            <input checked={order === 'desc'} type="radio" name="sorting-order" onChange={sortOrderHandler('desc')} /> -
-            По убыванию
+            <input checked={order === 'desc'} type="radio" name="sorting-order" onChange={sortOrderHandler('desc')} />
+            <span className="radio-option" title="по убыванию">
+              {' '}
+              - По убыванию
+            </span>
           </label>
         </div>
 
         <div className="radio-block">
           <label>
-            <input checked={mode === 'price'} type="radio" name="sorting-mode" onChange={sortModeHandler('price')} /> -
-            по цене
+            <input checked={mode === 'price'} type="radio" name="sorting-mode" onChange={sortModeHandler('price')} />
+            <span className="radio-option" title="по цене">
+              {' '}
+              - по цене
+            </span>
           </label>
           <label>
             <input
@@ -42,7 +50,10 @@ export const SortingBlock = () => {
               name="sorting-mode"
               onChange={sortModeHandler('duration-from-home')}
             />{' '}
-            - по продолжительности полета туда
+            <span className="radio-option" title="по продолжительности полета туда">
+              {' '}
+              - по продолжительности полета туда
+            </span>
           </label>
           <label>
             <input
@@ -51,7 +62,10 @@ export const SortingBlock = () => {
               name="sorting-mode"
               onChange={sortModeHandler('duration-return-to-home')}
             />{' '}
-            - по продолжительности полета обратно
+            <span className="radio-option" title="по продолжительности полета обратно">
+              {' '}
+              - по продолжительности полета обратно
+            </span>
           </label>
           <label>
             <input
@@ -60,7 +74,10 @@ export const SortingBlock = () => {
               name="sorting-mode"
               onChange={sortModeHandler('duration-total')}
             />{' '}
-            - по продолжительности полета туда и обратно
+            <span className="radio-option" title="по продолжительности полета туда и обратно">
+              {' '}
+              - по продолжительности полета туда и обратно
+            </span>
           </label>
           <label>
             <input
@@ -69,10 +86,13 @@ export const SortingBlock = () => {
               name="sorting-mode"
               onChange={sortModeHandler('duration-from-departure-to-returning')}
             />{' '}
-            - от даты вылета до даты возвращения
+            <span className="radio-option" title="от даты вылета до даты возвращения">
+              {' '}
+              - от даты вылета до даты возвращения
+            </span>
           </label>
         </div>
       </section>
-    </>
+    </div>
   );
 };

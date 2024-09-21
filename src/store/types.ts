@@ -85,3 +85,5 @@ export type FlightLegSummary = {
   duration: number;
   transfers: number;
 };
+
+export type FilterPredicate = (filters: FiltersState, flight: Flight) => boolean;

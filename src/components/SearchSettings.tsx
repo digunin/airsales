@@ -1,12 +1,12 @@
 import React from 'react';
 import { SortingBlock } from './SortingBlock';
+import { FilterBlock } from './filters/FilterBlock';
 
 export const SearchSettings = () => {
   return (
     <aside className="search-settings">
       <SortingBlock />
-      <header>Фильтровать</header>
-      <div className="filters-block"></div>
+      <FilterBlock />
     </aside>
   );
 };

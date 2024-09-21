@@ -1,7 +1,14 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '..';
 import { selectSortedFlights } from './sortedSelector';
-import { FiltersState, Flight } from '../types';
+import { FiltersState } from '../types';
+import { selectAllFlights } from './allFlightsSelector';
+import {
+  airlinesFilterPredicate,
+  filterPredicate,
+  priceFilterPredicate,
+  transfersFilterPredicate,
+} from './filterPredicates';
 import { getFlightSummary } from './utils';
 
 export const selectFilters = createSelector(
@@ -10,49 +17,63 @@ export const selectFilters = createSelector(
 );
 
 export const selectFilteredFlights = createSelector(selectSortedFlights, selectFilters, (flights, filters) => {
-  if (isEmptyFilters(filters)) return flights;
-  return flights.filter(filterPredicate(filters));
+  return flights.filter(
+    filterPredicate(filters, transfersFilterPredicate, priceFilterPredicate, airlinesFilterPredicate),
+  );
 });
 
-const filterPredicate = (filters: FiltersState) => (flight: Flight) => {
-  const flightSummary = getFlightSummary(flight);
-  const { nonstop, oneStop } = filters.transfers;
-
-  if (!!nonstop !== !!oneStop) {
-    if (!checkTransfers(filters, flightSummary)) return false;
+export const selectAirlinesWithPrice = createSelector(selectAllFlights, flights => {
+  const total: { [key: string]: number } = {};
+  for (const flight of flights) {
+    const airLine = flight.flight.carrier.caption;
+    const price = Number(flight.flight.price.total.amount);
+    total[airLine] = Math.min(total[airLine] || price, price);
   }
+  return Object.entries(total);
+});
 
-  if (!checkPrice(filters, flight.flight.price.total.amount)) return false;
+const selectFilteredByTransferAndPrice = createSelector(selectSortedFlights, selectFilters, (flights, filters) => {
+  if (isEmptyFilters(filters)) return flights;
+  return flights.filter(filterPredicate(filters, transfersFilterPredicate, priceFilterPredicate));
+});
 
-  if (filters.airlines.length) {
-    if (!checkAirlines(filters, flightSummary)) return false;
+const selectFilteredByPriceAndAirlines = createSelector(selectSortedFlights, selectFilters, (flights, filters) => {
+  if (isEmptyFilters(filters)) return flights;
+  return flights.filter(filterPredicate(filters, priceFilterPredicate, airlinesFilterPredicate));
+});
+
+export const selectAvailableAirlines = createSelector(selectFilteredByTransferAndPrice, flights => {
+  const total: string[] = [];
+  for (const flight of flights) {
+    const airline = flight.flight.carrier.caption;
+    if (!total.includes(airline)) total.push(airline);
   }
-  return true;
-};
+  return total;
+});
 
-const checkTransfers = (filters: FiltersState, summary: ReturnType<typeof getFlightSummary>) => {
-  const { fromHome } = summary;
-  const { nonstop } = filters.transfers;
-  const allowedTransfers = nonstop ? 0 : 1;
-  if (fromHome.transfers !== allowedTransfers) return false;
-  return true;
-};
-
-const checkPrice = (filters: FiltersState, price: number | string) => {
-  price = Number(price);
-  const { from, to } = filters.price;
-  if (from != null) {
-    if (price < from) return false;
+export const seletAvailableMinMaxPrice = createSelector(selectFilteredFlights, flights => {
+  let minPrice = NaN;
+  let maxPrice = NaN;
+  for (const flight of flights) {
+    const price = Number(flight.flight.price.total.amount);
+    minPrice = Math.min(minPrice || price, price);
+    maxPrice = Math.max(maxPrice || price, price);
   }
-  if (to != null) {
-    if (price > to) return false;
-  }
-  return true;
-};
+  return [minPrice, maxPrice];
+});
 
-const checkAirlines = (filters: FiltersState, summary: ReturnType<typeof getFlightSummary>) => {
-  return filters.airlines.includes(summary.fromHome.departureSegment.airline.caption);
-};
+export const selectAvailableTransfers = createSelector(selectFilteredByPriceAndAirlines, flights => {
+  let onestop = false;
+  let nonstop = false;
+  for (const flight of flights) {
+    const summary = getFlightSummary(flight);
+    const transfers = summary.fromHome.transfers;
+    if (!onestop) onestop = transfers === 1;
+    if (!nonstop) nonstop = transfers === 0;
+    if (onestop && nonstop) break;
+  }
+  return { onestop, nonstop };
+});
 
 const isEmptyFilters = ({ transfers, price, airlines }: FiltersState) => {
   if (transfers.nonstop || transfers.oneStop) return false;

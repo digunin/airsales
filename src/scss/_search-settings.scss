@@ -1,9 +1,12 @@
 aside {
   position: fixed;
-  width: 200px;
+  width: $search-settings-width;
   padding: 5px;
   padding-top: 3em;
   font-size: small;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
   header {
     font-weight: bold;
     margin: 1em 0;
@@ -11,13 +14,49 @@ aside {
   label {
     vertical-align: middle;
     margin: 1px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    input[type='checkbox'],
     input[type='radio'] {
       vertical-align: middle;
+      margin-right: 3px;
     }
   }
-  .radio-block {
+  .radio-block,
+  .checkbox-block {
     margin-bottom: 1em;
     display: flex;
     flex-direction: column;
+  }
+  .sorting-block {
+    margin-bottom: 3em;
+  }
+  .filter-block {
+    label {
+      display: flex;
+      align-items: center;
+      p {
+        width: 30px;
+        text-align: left;
+      }
+      input[type='text'] {
+        margin: 5px 0;
+        width: 100px;
+        flex-grow: 1;
+      }
+    }
+  }
+  .airlines {
+    max-width: $search-settings-width;
+    &-label {
+      display: flex;
+      span.airline {
+        flex-grow: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
   }
 }
