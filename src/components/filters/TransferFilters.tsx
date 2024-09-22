@@ -1,18 +1,8 @@
 import React from 'react';
-import { useAppDispatch, useAppSelector } from '../../store';
-import { FiltersState } from '../../store/types';
-import { setTransfers } from '../../store/slices/filterSlice';
-import { selectAvailableTransfers, selectTransfersFilter } from '../../store/selectors/filteredSelector';
+import { useTransfersFilter } from '../../hooks/useTransfersFilter';
 
 export const TransferFilter = () => {
-  const dispatch = useAppDispatch();
-  const transfers = useAppSelector(selectTransfersFilter);
-  const { onestop, nonstop } = useAppSelector(selectAvailableTransfers);
-
-  const transferFilterHandler = (newProps: Partial<FiltersState['transfers']>) => () => {
-    dispatch(setTransfers(newProps));
-  };
-
+  const { transfersFilter, onestop, nonstop, transferFilterHandler } = useTransfersFilter();
   return (
     <>
       <header>Фильтровать</header>
@@ -20,21 +10,21 @@ export const TransferFilter = () => {
         <div className="checkbox-block">
           <label>
             <input
-              checked={transfers.oneStop}
+              checked={transfersFilter.oneStop}
               disabled={!onestop}
               type="checkbox"
               name="sorting-order"
-              onChange={transferFilterHandler({ oneStop: !transfers.oneStop })}
+              onChange={transferFilterHandler({ oneStop: !transfersFilter.oneStop })}
             />
             <span className="checkbox-option">{` - 1 пересадка`}</span>
           </label>
           <label>
             <input
-              checked={transfers.nonstop}
+              checked={transfersFilter.nonstop}
               disabled={!nonstop}
               type="checkbox"
               name="sorting-order"
-              onChange={transferFilterHandler({ nonstop: !transfers.nonstop })}
+              onChange={transferFilterHandler({ nonstop: !transfersFilter.nonstop })}
             />
             <span className="checkbox-option">{` - без пересадок`}</span>
           </label>

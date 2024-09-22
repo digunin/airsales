@@ -1,4 +1,3 @@
-/* eslint-disable max-lines */
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '..';
 import { FiltersState } from '../types';
@@ -9,8 +8,6 @@ import {
   priceFilterPredicate,
   transfersFilterPredicate,
 } from './filterPredicates';
-import { getFlightSummary } from './utils';
-import { shallowEqual } from 'react-redux';
 
 export const selectTransfersFilter = createSelector(
   (state: RootState) => state.filterState.transfers,
@@ -44,23 +41,7 @@ export const selectFilteredFlights = createSelector(
   },
 );
 
-export const selectAirlinesWithPrice = createSelector(
-  selectAllFlights,
-  flights => {
-    const total: { [key: string]: number } = {};
-    for (const flight of flights) {
-      const airLine = flight.flight.carrier.caption;
-      const price = Number(flight.flight.price.total.amount);
-      total[airLine] = Math.min(total[airLine] || price, price);
-    }
-    return total;
-  },
-  {
-    memoizeOptions: { resultEqualityCheck: shallowEqual },
-  },
-);
-
-const selectFilteredByTransferAndPrice = createSelector(
+export const selectFilteredByTransferAndPrice = createSelector(
   selectAllFlights,
   selectTransfersFilter,
   selectPriceFilter,
@@ -71,7 +52,7 @@ const selectFilteredByTransferAndPrice = createSelector(
   },
 );
 
-const selectFilteredByPriceAndAirlines = createSelector(
+export const selectFilteredByPriceAndAirlines = createSelector(
   selectAllFlights,
   selectPriceFilter,
   selectAirlinesFilter,
@@ -79,57 +60,6 @@ const selectFilteredByPriceAndAirlines = createSelector(
     const filters = { price, airlines, transfers: { nonstop: false, oneStop: false } };
     if (isEmptyFilters(filters)) return flights;
     return flights.filter(filterPredicate(filters, priceFilterPredicate, airlinesFilterPredicate));
-  },
-);
-
-export const selectAvailableAirlines = createSelector(
-  selectFilteredByTransferAndPrice,
-  flights => {
-    const total: { [key: string]: true } = {};
-    for (const flight of flights) {
-      const airline = flight.flight.carrier.caption;
-      total[airline] = true;
-    }
-    return total;
-  },
-  {
-    memoizeOptions: { resultEqualityCheck: shallowEqual },
-  },
-);
-
-export const seletAvailableMinMaxPrice = createSelector(
-  selectFilteredFlights,
-  flights => {
-    let minPrice = NaN;
-    let maxPrice = NaN;
-    for (const flight of flights) {
-      const price = Number(flight.flight.price.total.amount);
-      minPrice = Math.min(minPrice || price, price);
-      maxPrice = Math.max(maxPrice || price, price);
-    }
-    return [minPrice, maxPrice];
-  },
-  {
-    memoizeOptions: { resultEqualityCheck: shallowEqual },
-  },
-);
-
-export const selectAvailableTransfers = createSelector(
-  selectFilteredByPriceAndAirlines,
-  flights => {
-    let onestop = false;
-    let nonstop = false;
-    for (const flight of flights) {
-      const summary = getFlightSummary(flight);
-      const transfers = summary.fromHome.transfers;
-      if (!onestop) onestop = transfers === 1;
-      if (!nonstop) nonstop = transfers === 0;
-      if (onestop && nonstop) break;
-    }
-    return { onestop, nonstop };
-  },
-  {
-    memoizeOptions: { resultEqualityCheck: shallowEqual },
   },
 );
 

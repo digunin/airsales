@@ -1,7 +1,7 @@
-import { useAppDispatch, useAppSelector } from '../store';
-import { seletAvailableMinMaxPrice } from '../store/selectors/filteredSelector';
-import { setPriceFrom, setPriceTo } from '../store/slices/filterSlice';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../store';
+import { seletAvailableMinMaxPrice } from '../store/selectors/selectComputed';
+import { setPriceFrom, setPriceTo } from '../store/slices/filterSlice';
 
 const DELAY = 800;
 

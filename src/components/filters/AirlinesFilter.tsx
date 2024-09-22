@@ -1,17 +1,8 @@
 import React from 'react';
-import { useAppDispatch, useAppSelector } from '../../store';
-import {
-  selectAirlinesWithPrice,
-  selectAvailableAirlines,
-  selectAirlinesFilter,
-} from '../../store/selectors/filteredSelector';
-import { toggleAirline } from '../../store/slices/filterSlice';
+import { useAirlinesFilter } from '../../hooks/useAirlinesFilter';
 
 export const AirlinesFilter = () => {
-  const dispatch = useAppDispatch();
-  const allAirlines = useAppSelector(selectAirlinesWithPrice);
-  const airlines = useAppSelector(selectAirlinesFilter);
-  const availableAirlines = useAppSelector(selectAvailableAirlines);
+  const { allAirlines, airlinesFilter, availableAirlines, onAirlineClickHandler } = useAirlinesFilter();
   return (
     <div className="airlines">
       <header>Авиакомпании</header>
@@ -20,12 +11,10 @@ export const AirlinesFilter = () => {
           return (
             <label className="airlines-label" key={airline}>
               <input
-                checked={airlines.includes(airline)}
-                disabled={!availableAirlines[airline]}
+                checked={airlinesFilter.includes(airline)}
+                disabled={!availableAirlines.includes(airline)}
                 type="checkbox"
-                onChange={() => {
-                  dispatch(toggleAirline(airline));
-                }}
+                onChange={onAirlineClickHandler(airline)}
               />
               <span title={airline} className="airline">{` - ${airline}`}</span>
               <span> от {minPrice} р</span>
