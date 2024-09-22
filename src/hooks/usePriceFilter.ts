@@ -1,17 +1,19 @@
-import { useAppDispatch } from '../store';
+import { useAppDispatch, useAppSelector } from '../store';
+import { seletAvailableMinMaxPrice } from '../store/selectors/filteredSelector';
 import { setPriceFrom, setPriceTo } from '../store/slices/filterSlice';
 import React, { useCallback, useEffect, useState } from 'react';
 
-const DELAY = 400;
+const DELAY = 800;
 
-export const usePriceFilter = (minPrice: number, maxPrice: number) => {
+export const usePriceFilter = () => {
+  const [minPrice, maxPrice] = useAppSelector(seletAvailableMinMaxPrice);
   const [inputPriceFrom, setInputPriceFrom] = useState('');
   const [inputPriceTo, setInputPriceTo] = useState('');
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       let price = Number(inputPriceFrom);
-      if (price > maxPrice) {
+      if (price > maxPrice || price < minPrice) {
         price = 0;
         setInputPriceFrom('');
       }
@@ -23,7 +25,7 @@ export const usePriceFilter = (minPrice: number, maxPrice: number) => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       let price = Number(inputPriceTo);
-      if (price < minPrice) {
+      if (price < minPrice || price > maxPrice) {
         price = 0;
         setInputPriceTo('');
       }
@@ -44,6 +46,8 @@ export const usePriceFilter = (minPrice: number, maxPrice: number) => {
   return {
     from: inputPriceFrom,
     to: inputPriceTo,
+    minPrice,
+    maxPrice,
     onChangePriceFrom: useCallback(onChangeHandler(setInputPriceFrom), []),
     onChangePriceTo: useCallback(onChangeHandler(setInputPriceTo), []),
   };

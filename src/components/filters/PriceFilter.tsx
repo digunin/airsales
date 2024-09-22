@@ -1,11 +1,8 @@
 import React from 'react';
 import { usePriceFilter } from '../../hooks/usePriceFilter';
-import { useAppSelector } from '../../store';
-import { seletAvailableMinMaxPrice } from '../../store/selectors/filteredSelector';
 
 export const PriceFilter = () => {
-  const [minPrice, maxPrice] = useAppSelector(seletAvailableMinMaxPrice);
-  const { from, to, onChangePriceFrom, onChangePriceTo } = usePriceFilter(minPrice, maxPrice);
+  const { from, to, minPrice, maxPrice, onChangePriceFrom, onChangePriceTo } = usePriceFilter();
   return (
     <div className="price-filter">
       <header>Цена</header>

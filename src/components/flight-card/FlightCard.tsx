@@ -6,7 +6,7 @@ import { FlightLeg } from './FlightLeg';
 
 type FlightCardProps = { flight: Flight };
 const currencySymbol = '₽';
-export const FlightCard: FC<FlightCardProps> = ({ flight }) => {
+export const FlightCard: FC<FlightCardProps> = React.memo(({ flight }) => {
   const { fromHome, returnHome, price } = getFlightSummary(flight);
 
   return (
@@ -18,4 +18,4 @@ export const FlightCard: FC<FlightCardProps> = ({ flight }) => {
       <button>выбрать</button>
     </article>
   );
-};
+});

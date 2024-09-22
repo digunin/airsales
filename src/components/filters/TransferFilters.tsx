@@ -2,16 +2,17 @@ import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { FiltersState } from '../../store/types';
 import { setTransfers } from '../../store/slices/filterSlice';
-import { selectAvailableTransfers, selectFilters } from '../../store/selectors/filteredSelector';
+import { selectAvailableTransfers, selectTransfersFilter } from '../../store/selectors/filteredSelector';
 
 export const TransferFilter = () => {
   const dispatch = useAppDispatch();
+  const transfers = useAppSelector(selectTransfersFilter);
+  const { onestop, nonstop } = useAppSelector(selectAvailableTransfers);
+
   const transferFilterHandler = (newProps: Partial<FiltersState['transfers']>) => () => {
     dispatch(setTransfers(newProps));
   };
-  const { transfers } = useAppSelector(selectFilters);
 
-  const { nonstop, onestop } = useAppSelector(selectAvailableTransfers);
   return (
     <>
       <header>Фильтровать</header>
