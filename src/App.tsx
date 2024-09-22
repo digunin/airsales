@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLoadDataQuery } from './api/flightsAPI';
-import { FlightsList } from './components/FlightsList';
 import { SearchSettings } from './components/SearchSettings';
+import { Main } from './components/Main';
 
 function App() {
   useLoadDataQuery();
@@ -9,7 +9,7 @@ function App() {
   return (
     <main className="app-container">
       <SearchSettings />
-      <FlightsList />
+      <Main />
     </main>
   );
 }

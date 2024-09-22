@@ -71,6 +71,7 @@ export type Flight = {
     };
     legs: FlightLeg[];
   };
+  flightToken: string;
 };
 
 export type AirsalesResponse = {

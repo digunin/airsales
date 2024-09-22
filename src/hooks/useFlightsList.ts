@@ -1,23 +1,25 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useAppSelector } from '../store';
-import { selectSortedFlightsLength, selectSortedFlightsSlice } from '../store/selectors/sortedSelector';
+import { selectHaveItemsToDisplaying, selectSortedFlightsSlice } from '../store/selectors/sortedSelector';
 import { selectAirlinesFilter, selectPriceFilter, selectTransfersFilter } from '../store/selectors/filteredSelector';
 
+const CARDS_PER_PAGE = 3;
+
 export const useFlightsList = () => {
-  const [cardslength, setCardsLength] = useState(3);
+  const [cardslength, setCardsLength] = useState(CARDS_PER_PAGE);
   const flights = useAppSelector(selectSortedFlightsSlice(cardslength));
-  const sortedLength = useAppSelector(selectSortedFlightsLength);
+  const haveItemsForDisplaying = useAppSelector(selectHaveItemsToDisplaying(cardslength));
   const transfersFilter = useAppSelector(selectTransfersFilter);
-  const priceFilters = useAppSelector(selectPriceFilter);
-  const airlinesFilters = useAppSelector(selectAirlinesFilter);
+  const priceFilter = useAppSelector(selectPriceFilter);
+  const airlinesFilter = useAppSelector(selectAirlinesFilter);
 
   useEffect(() => {
-    if (cardslength > 3) setCardsLength(3);
-  }, [transfersFilter, priceFilters, airlinesFilters]);
+    if (cardslength > CARDS_PER_PAGE) setCardsLength(CARDS_PER_PAGE);
+  }, [transfersFilter, priceFilter, airlinesFilter]);
 
   const showMoreHandler = useCallback(() => {
-    setCardsLength(prev => prev + 3);
+    setCardsLength(prev => prev + CARDS_PER_PAGE);
   }, []);
 
-  return { flights, showMoreHandler, showMoreButtonDisabled: sortedLength <= cardslength };
+  return { flights, showMoreHandler, showMoreButtonDisabled: !haveItemsForDisplaying };
 };

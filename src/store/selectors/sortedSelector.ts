@@ -54,4 +54,5 @@ export const selectSortedFlights = createSelector(
 export const selectSortedFlightsSlice = (length: number) =>
   createSelector(selectSortedFlights, flights => flights.slice(0, length));
 
-export const selectSortedFlightsLength = createSelector(selectSortedFlights, flights => flights.length);
+export const selectHaveItemsToDisplaying = (lenthOfDisplayed: number) =>
+  createSelector(selectSortedFlights, flights => flights.length > lenthOfDisplayed);
