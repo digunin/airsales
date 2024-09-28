@@ -23,11 +23,11 @@ export const selectAirlinesWithPrice = createSelector(
     memoizeOptions: { resultEqualityCheck: shallowEqual },
   },
 );
+
 export const selectAvailableAirlines = createSelector(selectFilteredByTransferAndPrice, flights => {
   const total: { [key: string]: true } = {};
   for (const flight of flights) {
-    const airline = flight.flight.carrier.caption;
-    total[airline] = true;
+    total[flight.flight.carrier.caption] = true;
   }
   return Object.keys(total).join('\n');
 });

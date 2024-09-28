@@ -10,15 +10,12 @@ const createReactKey = (flight: Flight) => {
   return flight.flightToken;
 };
 
-export const FlightsList: FC<FlightsListProps> = React.memo(
-  ({ flights }) => {
-    return (
-      <>
-        {flights.map(flight => {
-          return <FlightCard key={createReactKey(flight)} flight={flight} />;
-        })}
-      </>
-    );
-  },
-  (prev, cur) => JSON.stringify(prev) === JSON.stringify(cur),
-);
+export const FlightsList: FC<FlightsListProps> = ({ flights }) => {
+  return (
+    <>
+      {flights.map(flight => {
+        return <FlightCard key={createReactKey(flight)} flight={flight} />;
+      })}
+    </>
+  );
+};
