@@ -1,0 +1,15 @@
+@media screen and (max-width: '500px') {
+  section.flights-list {
+    .flight-card {
+      .flight-leg {
+        .route {
+          .route-point,
+          .route-arrow {
+            display: block;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+}
