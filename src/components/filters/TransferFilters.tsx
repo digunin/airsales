@@ -10,21 +10,21 @@ export const TransferFilter = () => {
         <div className="checkbox-block">
           <label>
             <input
-              checked={transfersFilter.oneStop}
+              checked={transfersFilter[1]}
               disabled={!onestop}
               type="checkbox"
               name="sorting-order"
-              onChange={transferFilterHandler({ oneStop: !transfersFilter.oneStop })}
+              onChange={transferFilterHandler([1, !transfersFilter[1]])}
             />
             <span className="checkbox-option">{` - 1 пересадка`}</span>
           </label>
           <label>
             <input
-              checked={transfersFilter.nonstop}
+              checked={transfersFilter[0]}
               disabled={!nonstop}
               type="checkbox"
               name="sorting-order"
-              onChange={transferFilterHandler({ nonstop: !transfersFilter.nonstop })}
+              onChange={transferFilterHandler([0, !transfersFilter[0]])}
             />
             <span className="checkbox-option">{` - без пересадок`}</span>
           </label>

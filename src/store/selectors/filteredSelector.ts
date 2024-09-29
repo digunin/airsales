@@ -9,20 +9,11 @@ import {
   transfersFilterPredicate,
 } from './filterPredicates';
 
-export const selectTransfersFilter = createSelector(
-  (state: RootState) => state.filterState.transfers,
-  transfers => transfers,
-);
+export const selectTransfersFilter = (state: RootState) => state.filterState.transfers;
 
-export const selectPriceFilter = createSelector(
-  (state: RootState) => state.filterState.price,
-  price => price,
-);
+export const selectPriceFilter = (state: RootState) => state.filterState.price;
 
-export const selectAirlinesFilter = createSelector(
-  (state: RootState) => state.filterState.airlines,
-  airlines => airlines,
-);
+export const selectAirlinesFilter = (state: RootState) => state.filterState.airlines;
 
 export const selectFilteredFlights = createSelector(
   selectAllFlights,
@@ -57,14 +48,14 @@ export const selectFilteredByPriceAndAirlines = createSelector(
   selectPriceFilter,
   selectAirlinesFilter,
   (flights, price, airlines) => {
-    const filters = { price, airlines, transfers: { nonstop: false, oneStop: false } };
+    const filters = { price, airlines, transfers: [] };
     if (isEmptyFilters(filters)) return flights;
     return flights.filter(filterPredicate(filters, priceFilterPredicate, airlinesFilterPredicate));
   },
 );
 
 const isEmptyFilters = ({ transfers, price, airlines }: FiltersState) => {
-  if (transfers.nonstop || transfers.oneStop) return false;
+  if (!transfers.every(item => !!item) || !transfers.every(item => !item)) return false;
   if (airlines.length > 0) return false;
   if (price.from || price.to) return false;
   return true;

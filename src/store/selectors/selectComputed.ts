@@ -32,31 +32,23 @@ export const selectAvailableAirlines = createSelector(selectFilteredByTransferAn
   return Object.keys(total).join('\n');
 });
 
-export const seletAvailableMinMaxPrice = createSelector(
-  selectFilteredFlights,
-  flights => {
-    let minPrice = NaN;
-    let maxPrice = NaN;
-    for (const flight of flights) {
-      const price = Number(flight.flight.price.total.amount);
-      minPrice = Math.min(minPrice || price, price);
-      maxPrice = Math.max(maxPrice || price, price);
-    }
-    return [minPrice, maxPrice];
-  },
-  {
-    memoizeOptions: { resultEqualityCheck: shallowEqual },
-  },
-);
+export const seletAvailableMinMaxPrice = createSelector(selectFilteredFlights, flights => {
+  let minPrice = NaN;
+  let maxPrice = NaN;
+  for (const flight of flights) {
+    const price = Number(flight.flight.price.total.amount);
+    minPrice = Math.min(minPrice || price, price);
+    maxPrice = Math.max(maxPrice || price, price);
+  }
+  return [minPrice, maxPrice];
+});
+
 export const selectAvailableTransfers = createSelector(selectFilteredByPriceAndAirlines, flights => {
-  let onestop = false;
-  let nonstop = false;
+  const availableTransfers: boolean[] = [];
   for (const flight of flights) {
     const summary = getFlightSummary(flight);
     const transfers = summary.fromHome.transfers;
-    if (!onestop) onestop = transfers === 1;
-    if (!nonstop) nonstop = transfers === 0;
-    if (onestop && nonstop) break;
+    availableTransfers[transfers] = true;
   }
-  return `${+onestop}-${+nonstop}`;
+  return availableTransfers.map(item => +item).join('-');
 });

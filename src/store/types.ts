@@ -8,16 +8,16 @@ export type SortMode =
 export type SortOrder = 'asc' | 'desc';
 
 export type FiltersState = {
-  transfers: {
-    nonstop: boolean;
-    oneStop: boolean;
-  };
+  // индекс массива transfers = количество пересадок
+  transfers: boolean[];
   price: {
     from: number | null;
     to: number | null;
   };
   airlines: string[];
 };
+
+export type TransferPayload = [number, boolean];
 
 export type SortingState = {
   mode: SortMode;

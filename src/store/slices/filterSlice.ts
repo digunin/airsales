@@ -1,11 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { FiltersState } from '../types';
+import { FiltersState, TransferPayload } from '../types';
 
 const initialState: FiltersState = {
-  transfers: {
-    nonstop: false,
-    oneStop: false,
-  },
+  transfers: [false, false],
   price: { from: null, to: null },
   airlines: [],
 };
@@ -14,11 +11,9 @@ const filterSlice = createSlice({
   name: 'filters',
   initialState,
   reducers: {
-    setTransfers: (state, action: PayloadAction<Partial<FiltersState['transfers']>>) => {
-      state.transfers = {
-        ...state.transfers,
-        ...action.payload,
-      };
+    setTransfers: (state, action: PayloadAction<TransferPayload>) => {
+      const [index, value] = action.payload;
+      state.transfers[index] = value;
     },
     setPriceFrom: (state, action: PayloadAction<number | null>) => {
       state.price.from = action.payload;

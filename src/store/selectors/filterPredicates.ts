@@ -10,13 +10,10 @@ export const filterPredicate =
     return true;
   };
 
-export const transfersFilterPredicate: FilterPredicate = (filters, flight) => {
-  const { nonstop, oneStop } = filters.transfers;
-  if (!!nonstop === !!oneStop) return true;
+export const transfersFilterPredicate: FilterPredicate = ({ transfers }, flight) => {
+  if (transfers.every(item => !!item) || transfers.every(item => !item)) return true;
   const { fromHome } = getFlightSummary(flight);
-  const allowedTransfers = nonstop ? 0 : 1;
-  if (fromHome.transfers !== allowedTransfers) return false;
-  return true;
+  return transfers[fromHome.transfers];
 };
 
 export const priceFilterPredicate: FilterPredicate = (filters, flight) => {
