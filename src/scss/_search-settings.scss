@@ -1,15 +1,25 @@
 aside {
   position: fixed;
-  width: $search-settings-width;
+  max-width: $search-settings-width;
   padding: 5px;
-  padding-top: 3em;
+  padding-top: $aside-padding-top;
+  padding-right: 10px;
   font-size: small;
   top: 0;
   bottom: 0;
   overflow-y: auto;
+  transition: transform 0.3s;
+  background-color: #fff;
+  scrollbar-gutter: auto;
+  &.hide {
+    transform: translate(calc($search-settings-width-medium-screen * -1));
+  }
   header {
     font-weight: bold;
     margin: 1em 0;
+  }
+  .close-button {
+    display: none;
   }
   label {
     vertical-align: middle;
@@ -48,7 +58,7 @@ aside {
     }
   }
   .airlines {
-    max-width: $search-settings-width;
+    width: 100%;
     &-label {
       display: flex;
       span.airline {

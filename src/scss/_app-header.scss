@@ -1,0 +1,19 @@
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  height: $app-header-height;
+  background-color: darken($main-color, 10%);
+  display: flex;
+  align-items: center;
+  div {
+    display: none;
+    margin-left: 10px;
+    img {
+      max-width: 30px;
+      width: 100%;
+    }
+  }
+}
